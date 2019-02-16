@@ -56,6 +56,7 @@ export default {
   connection: "Connection",
   collection: "Collection",
   collections_and_fields: "Collection & Fields",
+  collection_invalid_name: "Invalid collection name",
   collection_updated: "{collection} Collection Updated",
   collection_removed: "{collection} Collection Removed",
   collection_names_cannot_be_changed:
