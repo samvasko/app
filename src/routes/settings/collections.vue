@@ -523,6 +523,7 @@ export default {
           this.$router.push(`/settings/collections/${this.newName}`);
         })
         .catch(error => {
+          this.adding = false;
           this.$store.dispatch("loadingFinished", id);
           this.$events.emit("error", {
             notify: this.$t("something_went_wrong_body"),
