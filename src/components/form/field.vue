@@ -190,9 +190,6 @@ small {
   font-size: 12px;
   line-height: 1.5em;
   color: var(--light-gray);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .label {
