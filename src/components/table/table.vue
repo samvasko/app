@@ -295,7 +295,8 @@ export default {
           .map(field => this.widths[field])
           .reduce((acc, val) => acc + val, 0) +
         30 +
-        40
+        40 +
+        (this.manualSorting ? 38 : 0)
       );
     },
     itemsArray() {
