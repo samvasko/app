@@ -5,17 +5,12 @@ module.exports = {
   devServer: {
     allowedHosts: ["localhost", ".gitpod.io"],
     public: "127.0.0.1:8080",
-    proxy: (() => {
-      // Setup a proxy to the API only if the API url is configured
-      return "API_URL" in process.env
-        ? {
-            "/": {
-              target: process.env.API_URL,
-              changeOrigin: true
-            }
-          }
-        : undefined;
-    })()
+    proxy: {
+      "/": {
+        target: process.env.API_URL ? process.env.API_URL : "http://demo.directus.io/",
+        changeOrigin: true
+      }
+    }
   },
 
   // There are so many chunks (from all the interfaces / layouts) that we need to make sure to not
