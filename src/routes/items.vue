@@ -669,8 +669,6 @@ export default {
       return next(vm => (vm.notFound = true));
     }
 
-    if (collection === "directus_files") return next("/files");
-
     if (collectionInfo && collectionInfo.single) {
       return next(`/${store.state.currentProjectKey}/collections/${collection}/1`);
     }
@@ -710,7 +708,7 @@ export default {
     }
 
     if (collectionInfo && collectionInfo.single) {
-      return next(`/${store.state.currentProjectKey}/collections/${collection}/1`);
+      return next(`/${this.$store.state.currentProjectKey}/collections/${collection}/1`);
     }
 
     const id = this.$helpers.shortid.generate();

@@ -522,6 +522,7 @@ export default {
     },
     saveSort() {
       this.dragging = false;
+
       const fieldUpdates = this.fieldsWithSort.map(field => ({
         field: field.field,
         sort: field.sort

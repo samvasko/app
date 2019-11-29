@@ -646,7 +646,14 @@ export default {
           });
           this.confirmRemoveLoading = false;
           this.confirmRemove = false;
-          this.$router.push(`/${this.currentProjectKey}/collections/${this.collection}`);
+
+          let linkTo = `/${this.currentProjectKey}/collections/${this.collection}`;
+
+          if (this.collection.startsWith("directus_") === true) {
+            linkTo = `/${this.currentProjectKey}/${this.collection.substring(9)}`;
+          }
+
+          this.$router.push(linkTo);
         })
         .catch(error => {
           this.$store.dispatch("loadingFinished", id);
