@@ -2,26 +2,28 @@
   <v-notice v-if="Object.keys(interfaceOptions).length === 0">
     {{ $t("interface_has_no_options") }}
   </v-notice>
-  <form v-else-if="interfaceOptions" @submit.prevent>
-    <div v-for="(option, optionID) in interfaceOptions" :key="optionID" class="options">
-      <label :for="optionID">{{ option.name }}</label>
-      <v-ext-input
-        :id="option.interface"
-        :name="optionID"
-        :type="option.type"
-        :length="option.length"
-        :readonly="option.readonly"
-        :required="option.required"
-        :loading="option.loading"
-        :options="option.options"
-        :value="(value || {})[optionID]"
-        :fields="interfaceOptions"
-        :values="value || {}"
-        @input="stageValue(optionID, $event)"
-      />
-      <p class="note" v-html="$helpers.snarkdown(option.comment || '')" />
-    </div>
-  </form>
+  <v-sheet v-else-if="interfaceOptions">
+    <form @submit.prevent>
+      <div v-for="(option, optionID) in interfaceOptions" :key="optionID" class="options">
+        <label :for="optionID">{{ option.name }}</label>
+        <v-ext-input
+          :id="option.interface"
+          :name="optionID"
+          :type="option.type"
+          :length="option.length"
+          :readonly="option.readonly"
+          :required="option.required"
+          :loading="option.loading"
+          :options="option.options"
+          :value="(value || {})[optionID]"
+          :fields="interfaceOptions"
+          :values="val"
+          @input="stageValue(optionID, $event)"
+        />
+        <p class="note" v-html="$helpers.snarkdown(option.comment || '')" />
+      </div>
+    </form>
+  </v-sheet>
   <v-notice v-else>
     {{ $t("select_interface") }}
   </v-notice>
@@ -42,6 +44,9 @@ export default {
     interfaceOptions() {
       if (!this.interfaceName) return;
       return this.$store.state.extensions.interfaces[this.interfaceName].options;
+    },
+    val() {
+      return Array.isArray(this.value) ? {} : this.value;
     }
   },
   methods: {
@@ -54,15 +59,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 label {
   margin-bottom: 8px;
-  font-size: var(--size-2);
-  margin-bottom: 12px;
+  font-size: 15px;
+  margin-bottom: 8px;
 }
 
 div.options {
-  margin-top: 30px;
+  margin-bottom: 30px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .note {

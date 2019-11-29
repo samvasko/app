@@ -1,7 +1,7 @@
 <template>
   <div class="input-single-file">
     <v-card
-      v-if="value"
+      v-if="Array.isArray(value) === false && value"
       class="card"
       :title="image.title"
       :subtitle="subtitle + subtitleExtra"

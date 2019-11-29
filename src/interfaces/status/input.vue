@@ -55,7 +55,7 @@ export default {
       if (typeof this.permissions.status_blacklist === "string")
         return this.permissions.status_blacklist.split(",");
 
-      return this.permissions.status_blacklist;
+      return this.permissions.status_blacklist || [];
     },
     permissions() {
       if (this.newItem) {

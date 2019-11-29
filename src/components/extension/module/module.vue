@@ -6,11 +6,11 @@
 import Vue from "vue";
 import loadExtension from "../../../helpers/load-extension";
 import componentExists from "../../../helpers/component-exists";
-import pageFallback from "./page-fallback.vue";
-import pageLoading from "./page-loading.vue";
+import moduleFallback from "./module-fallback.vue";
+import moduleLoading from "./module-loading.vue";
 
 export default {
-  name: "VExtPage",
+  name: "VExtmodule",
   props: {
     id: {
       type: String,
@@ -18,47 +18,47 @@ export default {
     }
   },
   computed: {
-    pages() {
-      return this.$store.state.extensions.pages;
+    modules() {
+      return this.$store.state.extensions.modules;
     },
-    page() {
-      return this.pages && this.pages[this.id];
+    module() {
+      return this.modules && this.modules[this.id];
     },
     componentName() {
-      return `page-${this.id}`;
+      return `module-${this.id}`;
     }
   },
   watch: {
     id() {
-      this.registerPage();
+      this.registerModule();
     }
   },
   created() {
-    this.registerPage();
+    this.registerModule();
   },
   methods: {
     /**
      * Register the extension as component (if it hasn't been registered before yet)
      */
-    registerPage() {
+    registerModule() {
       // If component already exists, do nothing
       if (componentExists(this.componentName)) return;
 
       // If the extension isn't known by the API (e.g. it's not in the store), register it with the
       //   fallback immediately
-      if (!this.page) {
-        Vue.component(this.componentName, pageFallback);
+      if (!this.module) {
+        Vue.component(this.componentName, moduleFallback);
         return;
       }
 
       let component;
 
-      if (this.page.core) {
-        component = import("@/interfaces/" + this.page.id + "input.vue");
+      if (this.module.core) {
+        component = import("@/interfaces/" + this.module.id + "input.vue");
       } else {
-        const filePath = `${this.$store.state.apiRootPath}${this.page.path.replace(
+        const filePath = `${this.$store.state.apiRootPath}${this.module.path.replace(
           "meta.json",
-          "page.js"
+          "module.js"
         )}`;
 
         component = loadExtension(filePath);
@@ -66,8 +66,8 @@ export default {
 
       Vue.component(this.componentName, () => ({
         component: component,
-        error: pageFallback,
-        loading: pageLoading
+        error: moduleFallback,
+        loading: moduleLoading
       }));
     }
   }

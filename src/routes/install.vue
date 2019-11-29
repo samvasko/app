@@ -6,11 +6,8 @@
       <template v-if="firstInstall">
         <div class="field-grid">
           <div class="field">
-            <h2 class="type-title">Welcome to Directus</h2>
-            <p>
-              Please make sure you have your database information handy to set up your first
-              project.
-            </p>
+            <h2 class="type-title">{{ $t("welcome_to_directus") }}</h2>
+            <p>{{ $t("welcome_to_directus_copy") }}</p>
           </div>
         </div>
         <button type="button" @click="step = 2">{{ $t("next") }}</button>
@@ -18,11 +15,8 @@
       <template v-else class="field-grid">
         <div class="field-grid">
           <div class="field">
-            <h2 class="type-title">Create New Project</h2>
-            <p>
-              Make sure you have your database information handy, then enter your API's Super-Admin
-              password to continue.
-            </p>
+            <h2 class="type-title">{{ $t("create_new_project") }}</h2>
+            <p>{{ $t("create_new_project_copy") }}</p>
             <input
               v-model="super_admin_token"
               v-focus
@@ -67,7 +61,7 @@
               name="project"
               type="text"
               required
-              pattern="^[a-z_-]+$"
+              pattern="^[0-9a-z_-]+$"
               @input="setProjectKey"
             />
           </div>

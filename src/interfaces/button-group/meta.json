@@ -11,8 +11,6 @@
       "interface": "repeater",
       "type": "JSON",
       "options": {
-        "dataType": "value",
-        "buttonText": "Add Group",
         "fields": [
           {
             "field": "groups",
@@ -20,7 +18,7 @@
             "interface": "repeater",
             "type": "JSON",
             "options": {
-              "buttonText": "Add Button",
+              "template": "{{ label }}",
               "fields": [
                 {
                   "field": "label",
@@ -43,50 +41,7 @@
             }
           }
         ]
-      },
-      "default": [
-        [
-          {
-            "label": "$t:flight",
-            "icon": "flight",
-            "value": "flight"
-          },
-          {
-            "label": "$t:cruise",
-            "icon": "directions_boat",
-            "value": "cruise"
-          }
-        ],
-        [
-          {
-            "label": "$t:train",
-            "icon": "train",
-            "value": "train"
-          },
-          {
-            "label": "$t:bus",
-            "icon": "directions_bus",
-            "value": "bus"
-          },
-          {
-            "label": "$t:car",
-            "icon": "directions_car",
-            "value": "car"
-          },
-          {
-            "icon": "directions_bike",
-            "value": "bike"
-          },
-          {
-            "icon": "directions_run",
-            "value": "run"
-          },
-          {
-            "label": "$t:other",
-            "value": "other"
-          }
-        ]
-      ]
+      }
     },
     "theme": {
       "name": "$t:theme",
@@ -111,7 +66,7 @@
   "translation": {
     "en-US": {
       "button_group": "Button Group",
-      "choices": "choices",
+      "choices": "Choices",
       "choices_comment":
         "Enter JSON key value pairs with the saved value and text displayed.",
       "theme": "Interface Theme",

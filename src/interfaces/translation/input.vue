@@ -123,9 +123,12 @@ export default {
           if (this.values.translation == null) {
             this.activeLanguage = this.options.defaultLanguage ? this.options.defaultLanguage : 0;
           } else {
-            this.activeLanguage = this.values.translation[0]
-              ? this.values.translation[0].language_code
-              : 0;
+            this.activeLanguage =
+              languages[0][
+                _.find(this.languageFields, {
+                  primary_key: true
+                }).field
+              ];
           }
         });
     },

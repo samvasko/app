@@ -38,7 +38,7 @@ export const REMOVE_FIELD = "📌 Remove Field";
 // Extensions
 export const SET_INTERFACES = "📦 Set Interfaces";
 export const SET_LAYOUTS = "📦 Set Layouts";
-export const SET_PAGES = "📦 Set Pages";
+export const SET_MODULES = "📦 Set Modules";
 
 // Hydrate
 export const STORE_HYDRATED = "🏪 Store Hydrated";

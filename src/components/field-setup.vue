@@ -242,7 +242,7 @@
       </h1>
 
       <form v-if="relation === 'm2o'" class="single">
-        <p>{{ $t("this_collection") }}</p>
+        <span class="type-label">{{ $t("this_collection") }}</span>
 
         <v-simple-select class="select" :value="relationInfo.collection_many" disabled>
           <option selected :value="collectionInfo.collection">
@@ -256,7 +256,7 @@
 
         <v-icon name="arrow_backward" />
 
-        <p>{{ $t("related_collection") }}</p>
+        <span class="type-label">{{ $t("related_collection") }}</span>
 
         <v-simple-select v-model="relationInfo.collection_one" class="select">
           <optgroup :label="$t('collections')">
@@ -291,7 +291,7 @@
       </form>
 
       <form v-if="relation === 'o2m'" class="single">
-        <p>{{ $t("this_collection") }}</p>
+        <span class="type-label">{{ $t("this_collection") }}</span>
 
         <v-simple-select class="select" :value="collectionInfo.collection" disabled>
           <option selected :value="collectionInfo.collection">
@@ -307,7 +307,7 @@
 
         <v-icon name="arrow_forward" size="24" />
 
-        <p>{{ $t("related_collection") }}</p>
+        <span class="type-label">{{ $t("related_collection") }}</span>
 
         <v-simple-select v-model="relationInfo.collection_many" class="select">
           <optgroup :label="$t('collections')">
@@ -342,7 +342,7 @@
       </form>
 
       <form v-if="relation === 'm2m'" class="full">
-        <p>{{ $t("this_collection") }}</p>
+        <p class="type-label">{{ $t("this_collection") }}</p>
 
         <v-simple-select class="select" :value="collectionInfo.collection" disabled>
           <option selected :value="collectionInfo.collection">
@@ -358,7 +358,7 @@
 
         <v-icon name="arrow_forward" size="24" />
 
-        <p>{{ $t("junction_collection") }}</p>
+        <p class="type-label">{{ $t("junction_collection") }}</p>
 
         <v-simple-select
           v-if="!createM2Mjunction"
@@ -451,6 +451,7 @@
         />
 
         <v-checkbox
+          v-if="!existing"
           id="createM2Mjunction"
           value="m2mjunction"
           :label="$t('auto_generate')"
@@ -460,7 +461,7 @@
 
         <v-icon name="arrow_backward" size="24" />
 
-        <p>{{ $t("related_collection") }}</p>
+        <p class="type-label">{{ $t("related_collection") }}</p>
 
         <v-simple-select
           v-model="relationInfoM2M[currentM2MIndex == 0 ? 1 : 0].collection_one"
@@ -1083,7 +1084,7 @@ export default {
     this.useFieldInfo();
     this.initRelation();
 
-    this.activeTab = this.existing ? "schema" : "interface";
+    this.activeTab = this.existing ? "options" : "interface";
   },
   methods: {
     interfaceSubtitles(ext) {
@@ -1765,11 +1766,11 @@ details {
   justify-content: center;
   align-items: center;
 
-  p:first-of-type {
+  span:first-of-type {
     grid-area: a;
   }
 
-  p:last-of-type {
+  span:last-of-type {
     grid-area: b;
   }
 

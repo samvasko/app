@@ -251,7 +251,10 @@ export default {
             this.items.data = res.data;
           }
 
-          this.$emit("fetch", res.meta);
+          this.$emit("fetch", {
+            ...res.meta,
+            local_count: this.items.data.length
+          });
         })
         .catch(error => {
           console.error(error); // eslint-disable-line no-console
@@ -389,7 +392,10 @@ export default {
             this.items.data = [...this.items.data, ...res.data];
           }
 
-          this.$emit("fetch", res.meta);
+          this.$emit("fetch", {
+            ...res.meta,
+            local_count: this.items.data.length
+          });
         })
         .catch(error => {
           console.error(error); // eslint-disable-line no-console
@@ -400,8 +406,8 @@ export default {
     formatParams() {
       let params = {
         meta: "total_count,result_count",
-        limit: 100,
-        offset: 100 * this.items.page
+        limit: this.$store.state.settings.values.default_limit,
+        offset: this.$store.state.settings.values.default_limit * this.items.page
       };
 
       Object.assign(params, this.viewQuery);
@@ -416,7 +422,7 @@ export default {
         }
 
         /*
-          For non-admin users if created_at and status field is available in 
+          For non-admin users if created_at and status field is available in
           collection fetch it from API even if it is set hidden from info sidebar.
           Because for checking role_only and mine permissions while batch updating
           or deleting data this fields are required.

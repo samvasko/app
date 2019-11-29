@@ -552,6 +552,8 @@ export default {
       const parentStatus = this.statusSelect.status;
       const selectedStatuses = this.permission[parentStatus].status_blacklist;
 
+      console.log([...selectedStatuses, status], parentStatus);
+
       if (selectedStatuses.includes(status)) {
         return this.emitValue(
           "status_blacklist",

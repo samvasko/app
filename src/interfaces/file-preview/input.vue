@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isImage" class="image">
-      <img v-if="!imgError" id="image" :key="image.hash" :src="vUrl" @error="imgError = true" />
+      <img v-if="!imgError" id="image" :key="image.hash" :src="url" @error="imgError = true" />
       <div v-if="imgError" class="broken-image">
         <v-icon name="broken_image" />
       </div>
@@ -178,13 +178,6 @@ export default {
     },
     url() {
       return this.values.data.full_url;
-    },
-    vUrl() {
-      /**
-       * Timestamp fetches the latest image from server
-       * hash helps to refresh the image after crop
-       */
-      return `${this.values.data.full_url}?${this.image.hash}&timestamp=${new Date().getTime()}`;
     }
   },
   watch: {
@@ -243,11 +236,6 @@ export default {
 
     rotateImage() {
       this.image.cropper.rotate(-90);
-      //TODO: Fix the image rotation issue
-      /**
-       * White rotating the image, the sides are getting cut of
-       * due to limitations of the cropper.js plugin
-       */
     },
 
     async saveImage() {
@@ -274,16 +262,9 @@ export default {
         });
 
         this.image.hash = shortid.generate();
-        /**
-         * This will wait for new cropped image to load from server
-         * & then destroy the cropper instance
-         * This prevents flickering between old and new image
-         */
-        const img = new Image();
-        img.src = this.vUrl;
-        img.onload = () => {
-          this.cancelImageEdit();
-        };
+        this.editMode = null;
+        this.image.cropRatio = "free";
+        this.image.cropper.destroy();
       } catch (err) {
         this.$events.emit("error", {
           notify: "There was an error while saving the image",

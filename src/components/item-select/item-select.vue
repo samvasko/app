@@ -51,7 +51,7 @@
           <span />
           <span v-if="collection === 'directus_files'">{{ $t("file") }}</span>
           <span v-for="field in fields" :key="field">
-            {{ $helpers.formatField(field.field, field.collection) }}
+            {{ $helpers.formatField(field, collection) }}
           </span>
         </div>
 

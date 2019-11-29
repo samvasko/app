@@ -30,8 +30,7 @@
     "description": {
       "name": "$t:desc-name",
       "comment": "$t:desc-comment",
-      "interface": "text-input",
-      "default": "An optional description of this divider or section"
+      "interface": "text-input"
     },
     "hr": {
       "name": "$t:hr-name",

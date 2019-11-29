@@ -10,29 +10,27 @@
         <section class="main-bar">
           <project-switcher />
 
-          <template v-for="section in navStructure">
-            <nav-bookmarks
-              v-if="section.include && section.include === 'bookmarks' && bookmarks.length > 0"
-              :key="section.id"
-              :title="section.title"
-              class="menu-section"
-              :bookmarks="bookmarks"
-            />
+          <nav-menu
+            v-if="customCollections === null"
+            class="menu-section"
+            :links="defaultCollections"
+          />
+
+          <template v-else>
             <nav-menu
-              v-else-if="section.include && section.include === 'collections'"
-              :key="section.id"
-              :title="section.title"
+              v-for="(group, index) in customCollections"
+              :key="index"
+              :title="group.title"
+              :links="group.links"
               class="menu-section"
-              :links="linksCollections"
-            />
-            <nav-menu
-              v-else
-              :key="section.id"
-              class="menu-section"
-              :title="section.title"
-              :links="section.links ? section.links : []"
             />
           </template>
+
+          <nav-bookmarks
+            v-if="bookmarks && bookmarks.length > 0"
+            class="menu-section"
+            :bookmarks="bookmarks"
+          />
         </section>
       </aside>
     </transition>
@@ -57,7 +55,7 @@ export default {
     ModuleBar
   },
   computed: {
-    ...mapState(["currentProjectKey"]),
+    ...mapState(["currentProjectKey", "currentUser"]),
     permissions() {
       return this.$store.state.permissions;
     },
@@ -93,37 +91,30 @@ export default {
     bookmarks() {
       return this.$store.state.bookmarks;
     },
+    customCollections() {
+      const collectionListing = this.currentUser.role.collection_listing;
+      const hasCustom = Array.isArray(collectionListing) && collectionListing.length > 0;
 
-    // This is the default structure of the navigation pane
-    // By default it will list collections, bookmarks
-    // This is the thing that will be overridden by the nav_override field
-    // in directus_roles
-    defaultNavStructure() {
-      return [
-        {
-          title: "$t:collections",
-          include: "collections"
-        },
-        {
-          title: "$t:bookmarks",
-          include: "bookmarks"
-        }
-      ];
+      if (hasCustom === false) return null;
+
+      return collectionListing.map(group => {
+        return {
+          title: group.group_name,
+          links: group.collections.map(({ collection }) => {
+            const collectionInfo = this.collections.find(c => c.collection === collection);
+
+            return {
+              link: `/${this.currentProjectKey}/collections/${collection}`,
+              name: this.$helpers.formatCollection(collection),
+              icon: collectionInfo.icon
+            };
+          })
+        };
+      });
     },
-
-    // The structure of the navigation. Will return the stored value for the role
-    // nav override or the default structure above if it isn't set
-    // It will also replace the `includes` with links for the actual sections
-    navStructure() {
-      const userRole = this.$store.state.currentUser.role;
-      const navOverride = userRole.nav_override;
-
-      return navOverride || this.defaultNavStructure;
-    },
-
-    linksCollections() {
+    defaultCollections() {
       return this.collections.map(({ collection, icon }) => ({
-        path: `/${this.currentProjectKey}/collections/${collection}`,
+        link: `/${this.currentProjectKey}/collections/${collection}`,
         name: this.$helpers.formatCollection(collection),
         icon
       }));

@@ -28,9 +28,14 @@
             "
           />
         </template>
-        <template v-else>
-          <button type="button" class="preview" @click="open = !open">{{ displayValue }}</button>
-        </template>
+        <button
+          v-else
+          type="button"
+          :class="showPlaceholder ? 'placeholder' : 'preview'"
+          @click="$emit('open')"
+        >
+          {{ showPlaceholder ? placeholder : displayValue }}
+        </button>
       </div>
       <button type="button" @click="$emit('remove')">
         <v-icon name="delete_outline" class="remove" />
@@ -43,6 +48,8 @@
 </template>
 
 <script>
+import getFieldsFromTemplate from "@/helpers/get-fields-from-template";
+
 export default {
   name: "RepeaterRow",
   props: {
@@ -61,24 +68,34 @@ export default {
     template: {
       type: String,
       default: null
+    },
+    open: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      required: true
     }
-  },
-  data() {
-    return {
-      open: false
-    };
   },
   computed: {
     displayValue() {
       if (!this.template) {
         return null;
-        // return $t("new_item");
       }
 
       let preview = this.$helpers.micromustache.render(this.template, this.row);
-      // return preview.length > 0 ? preview : $t("new_item");
 
       return preview;
+    },
+    showPlaceholder() {
+      const fields = getFieldsFromTemplate(this.template);
+
+      const fieldsHaveValue = fields.every(field => {
+        return this.row[field] !== null && this.row[field]?.length > 0;
+      });
+
+      return fieldsHaveValue === false;
     }
   }
 };
@@ -87,21 +104,29 @@ export default {
 <style lang="scss" scoped>
 .repeater-row {
   margin-bottom: 8px;
+  padding: 0;
 }
 
 .header {
+  --form-vertical-gap: 24px;
+  --form-horizontal-gap: 12px;
+  --type-label-size: 15px;
+  --input-height: 44px;
+  --input-font-size: 14px;
+  --input-label-margin: 4px;
+  --input-background-color-alt: var(--input-background-color);
+
   display: flex;
   align-items: center;
-  min-height: 36px;
+  min-height: var(--input-height);
+  padding: var(--input-padding);
+
+  .drag-handle {
+    color: var(--input-icon-color);
+    cursor: grab;
+  }
 
   .content {
-    --form-vertical-gap: 24px;
-    --form-horizontal-gap: 12px;
-    --type-label-size: 15px;
-    --input-height: 44px;
-    --input-font-size: 14px;
-    --input-label-margin: 4px;
-
     flex-grow: 1;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
@@ -112,13 +137,21 @@ export default {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .preview {
+    .placeholder {
+      color: var(--input-placeholder-color);
+      font-style: italic;
+    }
+
+    .preview,
+    .placeholder {
       text-align: left;
       min-height: 32px;
     }
   }
+
   .remove {
     transition: color var(--fast) var(--transition);
+    color: var(--input-icon-color);
     &:hover {
       color: var(--danger);
     }
@@ -132,6 +165,7 @@ export default {
   --input-height: 44px;
   --input-font-size: 14px;
   --input-label-margin: 4px;
-  padding: 4px;
+  --input-background-color-alt: var(--input-background-color);
+  padding: 8px;
 }
 </style>

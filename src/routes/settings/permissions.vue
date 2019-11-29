@@ -204,9 +204,13 @@ export default {
           return;
         }
 
-        Object.keys(this.statuses[collection].mapping).forEach(status => {
+        const statusNames = Object.keys(this.statuses[collection].mapping);
+        const statusesToUse = [...statusNames, "$create"];
+
+        statusesToUse.forEach(status => {
           if (!permissions[collection]) {
             permissions[collection] = {};
+            permissions[collection].$create = defaultPermission;
           }
 
           permissions[collection][status] = {
@@ -230,8 +234,6 @@ export default {
 
           return;
         });
-
-        permissions[collection].$create = defaultPermission;
       });
 
       return permissions;

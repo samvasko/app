@@ -72,6 +72,8 @@
   "create_role": "Create Role",
   "created_by": "Created By",
   "created_on": "Created On",
+  "create_new_project": "Create New Project",
+  "create_new_project_copy": "Make sure you have your database information handy, then enter your API's Super-Admin password to continue.",
   "creating_item": "Creating Item",
   "creating_item_page_title": "Creating Item: {collection}",
   "creating_role": "Creating Role",
@@ -482,6 +484,8 @@
     "sunday": "Sunday"
   },
   "welcome": "Welcome",
+  "welcome_to_directus": "Welcome to Directus",
+  "welcome_to_directus_copy": "Please make sure you have your database information handy to set up your first project.",
   "why": "Why?",
   "wrapping_up": "Wrapping Up",
   "wrong_super_admin_password": "The super admin password you provided is incorrect.",

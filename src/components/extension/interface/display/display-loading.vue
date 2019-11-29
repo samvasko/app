@@ -2,8 +2,8 @@
   <v-spinner
     class="v-ext-display-loading"
     size="20"
-    line-fg-color="var(--blue-grey-200)"
-    line-bg-color="var(--blue-grey-50)"
+    line-fg-color="var(--input-border-color-hover)"
+    line-bg-color="var(--input-border-color)"
   />
 </template>
 

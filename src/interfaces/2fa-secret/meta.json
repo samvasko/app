@@ -1,5 +1,5 @@
 {
-  "name": "2fa-secret",
+  "name": "2FA Secret",
   "version": "1.0.0",
   "types": ["string"],
   "recommended": {

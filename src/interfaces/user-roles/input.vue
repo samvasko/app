@@ -5,7 +5,7 @@
     :name="name"
     :placeholder="$t('interfaces-user-roles-choose_role')"
     :options="selectOptions"
-    :value="value && value.id"
+    :value="primaryKey"
     @input="emitValue"
   ></v-select>
 </template>
@@ -24,6 +24,15 @@ export default {
     };
   },
   computed: {
+    primaryKey() {
+      if (this.value === null) {
+        return null;
+      } else if (typeof this.value === "object") {
+        return this.value.id;
+      } else {
+        return this.value;
+      }
+    },
     selectOptions() {
       const options = {};
 

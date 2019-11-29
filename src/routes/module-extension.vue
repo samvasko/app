@@ -1,6 +1,6 @@
 <template>
   <v-not-found v-if="exists === false" />
-  <v-ext-page v-else :id="id" />
+  <v-ext-module v-else :id="id" />
 </template>
 
 <script>
@@ -8,14 +8,14 @@ import store from "../store/";
 import VNotFound from "./not-found.vue";
 
 export default {
-  name: "PageExtension",
+  name: "ModuleExtension",
   metaInfo() {
-    const page = this.$store.state.extensions.pages[this.id];
+    const module = this.$store.state.extensions.modules[this.id];
 
-    if (!page) return null;
+    if (!module) return null;
 
     return {
-      title: page.name
+      title: module.name
     };
   },
   components: {
@@ -33,12 +33,12 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    const pages = store.state.extensions.pages;
+    const modules = store.state.extensions.modules;
     const id = to.params.id;
 
     let exists = false;
 
-    if (pages.hasOwnProperty(id)) {
+    if (modules.hasOwnProperty(id)) {
       exists = true;
     }
 
@@ -47,12 +47,12 @@ export default {
     });
   },
   beforeRouteUpdate(to, from, next) {
-    const pages = this.$store.state.extensions.pages;
+    const modules = this.$store.state.extensions.modules;
     const id = this.id;
 
     this.exists = false;
 
-    if (pages.hasOwnProperty(id)) {
+    if (modules.hasOwnProperty(id)) {
       this.exists = true;
     }
 

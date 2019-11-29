@@ -1,0 +1,55 @@
+{
+  "name": "Key / Value",
+  "version": "1.0.0",
+  "icon": "list_alt",
+  "types": ["json"],
+  "options": {
+    "keyInterface": {
+      "name": "Key Interface",
+      "interface": "interfaces",
+      "default": "text-input",
+      "options": {
+        "relational": false
+      }
+    },
+    "keyType": {
+      "name": "Key Data Type",
+      "interface": "interface-types",
+      "options": {
+        "interfaceField": "keyInterface"
+      }
+    },
+    "keyOptions": {
+      "name": "Key Interface Options",
+      "comment": "The options to use for the key field interface",
+      "interface": "interface-options",
+      "options": {
+        "interfaceField": "keyInterface"
+      }
+    },
+    "valueInterface": {
+      "name": "Value Interface",
+      "comment": "What interface to use for the value field",
+      "interface": "interfaces",
+      "default": "text-input",
+      "options": {
+        "relational": false
+      }
+    },
+    "valueType": {
+      "name": "Value Data Type",
+      "interface": "interface-types",
+      "options": {
+        "interfaceField": "valueInterface"
+      }
+    },
+    "valueOptions": {
+      "name": "Value Interface Options",
+      "comment": "The options to use for the value field interface",
+      "interface": "interface-options",
+      "options": {
+        "interfaceField": "valueInterface"
+      }
+    }
+  }
+}

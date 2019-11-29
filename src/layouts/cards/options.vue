@@ -42,17 +42,6 @@
       @input="setOption('subtitle', $event === '__none__' ? null : $event)"
     ></v-select>
 
-    <label for="content" class="type-label">
-      {{ $t("layouts-cards-content") }}
-    </label>
-    <v-select
-      id="content"
-      :value="viewOptions.content || '__none__'"
-      :options="fieldOptions"
-      icon="title"
-      @input="setOption('content', $event === '__none__' ? null : $event)"
-    ></v-select>
-
     <label for="icon" class="type-label">Fallback Icon</label>
     <v-input
       :value="viewOptions.icon || 'photo'"

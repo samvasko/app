@@ -22,7 +22,7 @@ import SettingsCollections from "./routes/settings/collections.vue";
 import SettingsFields from "./routes/settings/fields.vue";
 import SettingsRoles from "./routes/settings/roles.vue";
 import SettingsPermissions from "./routes/settings/permissions.vue";
-import PageExtension from "./routes/page-extension.vue";
+import ModuleExtension from "./routes/module-extension.vue";
 import hydrateStore from "@/hydrate";
 
 Vue.use(Router);
@@ -60,7 +60,7 @@ const router = new Router({
     {
       path: "/:project/ext/:id",
       props: true,
-      component: PageExtension
+      component: ModuleExtension
     },
     {
       path: "/:project/bookmarks/:collection/:bookmarkID",

@@ -39,7 +39,7 @@ export default {
     },
     value: {
       type: Number,
-      required: true
+      default: null
     },
     min: {
       type: Number,
@@ -90,7 +90,6 @@ export default {
     transition: border-color var(--fast) var(--transition);
     padding: 12px 0 0;
     border-radius: 2px;
-    background-color: var(--input-background-color);
 
     flex-grow: 1;
     flex-shrink: 0;
@@ -187,6 +186,7 @@ export default {
     margin-right: 14px;
     margin-top: 2px;
     height: 0;
+    pointer-events: none;
   }
   output {
     transition: opacity var(--fast) var(--transition);
@@ -204,7 +204,7 @@ export default {
     padding: 4px 8px;
     opacity: 0;
     user-select: none;
-    z-index: 2;
+    z-index: 4;
     &:before {
       content: "";
       position: absolute;

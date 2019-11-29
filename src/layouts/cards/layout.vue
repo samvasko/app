@@ -36,18 +36,6 @@
             :relation="fields[subtitle].relation"
           />
         </template>
-        <template v-if="content" slot="content">
-          <v-ext-display
-            :key="`card-content-${fields[content].interface}-${index}`"
-            :interface-type="fields[content].interface"
-            :name="content"
-            :collection="collection"
-            :type="fields[content].type"
-            :options="fields[content].options"
-            :value="item[content]"
-            :relation="fields[content].relation"
-          />
-        </template>
       </v-card>
       <v-card
         v-if="lazyLoading"

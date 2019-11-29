@@ -27,14 +27,14 @@
           {
             "field": "field",
             "interface": "text-input",
-            "default": "field_name",
             "type": "string",
             "width": "half",
             "options": {
               "placeholder": "Choose a name for this field",
               "monospace": true,
               "formatValue": true
-            }
+            },
+            "required": true
           },
           {
             "field": "width",
@@ -96,6 +96,22 @@
           }
         ]
       }
+    },
+    "placeholder": {
+      "name": "Placeholder",
+      "comment": "The value that shows up instead of the template if there's no value entered yet",
+      "interface": "text-input",
+      "type": "string",
+      "default": "New Item...",
+      "advanced": true
+    },
+    "createItemText": {
+      "name": "Create Item Text",
+      "comment": "Text that's displayed in the button that adds a new row to the repeater",
+      "interface": "text-input",
+      "type": "string",
+      "default": "Create Item",
+      "advanced": true
     },
     "limit": {
       "name": "$t:limit",

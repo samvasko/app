@@ -55,7 +55,11 @@ export default {
         return { backgroundImage: `url(${this.project_background?.full_url})` };
       }
 
-      return { backgroundColor: `var(--${this.project_color})` };
+      return {
+        backgroundColor: this.project_color.startsWith("#")
+          ? this.project_color
+          : `var(--${this.project_color})`
+      };
     },
     project_color() {
       return this.currentProject?.data?.project_color || defaults.project_color;

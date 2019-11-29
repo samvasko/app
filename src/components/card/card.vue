@@ -63,11 +63,6 @@
           <p v-else-if="subtitle" class="subtitle type-note">
             {{ subtitle }}
           </p>
-
-          <div v-if="$slots.content" class="content">
-            <slot name="content"></slot>
-          </div>
-          <p v-else-if="body" class="content">{{ body }}</p>
         </div>
         <v-contextual-menu
           v-if="options"
@@ -113,10 +108,6 @@ export default {
       default: null
     },
     subtitle: {
-      type: String,
-      default: null
-    },
-    body: {
       type: String,
       default: null
     },
@@ -378,16 +369,10 @@ export default {
   .title {
     margin-bottom: 2px;
   }
+
   .subtitle {
     color: var(--note-text-color);
     font-size: 13px;
-  }
-  .content {
-    font-size: 11px;
-    color: var(--note-text-color);
-    max-height: 114px; // 8 lines of text
-    overflow: hidden;
-    margin-top: 8px;
   }
 
   .error {

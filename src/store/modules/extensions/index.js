@@ -4,7 +4,7 @@ import mutations from "./mutations";
 export const initialState = {
   layouts: {},
   interfaces: {},
-  pages: {}
+  modules: {}
 };
 
 export default {

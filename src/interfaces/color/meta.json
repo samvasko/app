@@ -7,39 +7,18 @@
     "length": 20
   },
   "options": {
-    "input": {
-      "name": "$t:input",
-      "comment": "$t:input_comment",
+    "format": {
+      "name": "Output Format",
+      "comment": "In what data format to save the value",
       "interface": "dropdown",
       "default": "hex",
       "options": {
         "choices": {
           "hex": "Hex",
           "rgb": "RGB",
-          "hsl": "HSL",
-          "cmyk": "CMYK"
+          "hsl": "HSL"
         }
       }
-    },
-    "output": {
-      "name": "$t:output",
-      "comment": "$t:output_comment",
-      "interface": "dropdown",
-      "default": "hex",
-      "options": {
-        "choices": {
-          "hex": "Hex",
-          "rgb": "RGB",
-          "hsl": "HSL",
-          "cmyk": "CMYK"
-        }
-      }
-    },
-    "formatValue": {
-      "name": "$t:format",
-      "comment": "$t:format_comment",
-      "interface": "toggle",
-      "default": true
     },
     "palette": {
       "name": "$t:palette",
@@ -50,18 +29,13 @@
         "wrapWithDelimiter": false
       },
       "default": [
-        "#f44336", "#9C27B0", "#039BE5", "#4CAF50", "#FFC107"
+        "#E91E63", "#F44336", "#FF9800", "#FFC107", "#FFEB3B", "#CDDC39",
+        "#4CAF50", "#00BCD4", "#2196F3", "#3F51B5", "#9C27B0", "#607D8B"
       ]
     },
     "paletteOnly": {
       "name": "$t:palette_only",
       "comment": "$t:palette_only_comment",
-      "interface": "toggle",
-      "default": false
-    },
-    "allowAlpha": {
-      "name": "$t:allow_alpha",
-      "comment": "$t:allow_alpha_comment",
       "interface": "toggle",
       "default": false
     }

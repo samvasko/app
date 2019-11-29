@@ -56,8 +56,8 @@ function readCoreExtensions(type) {
     case "layouts":
       requireContext = require.context("@/layouts/", true, /meta.json$/);
       break;
-    case "pages":
-      requireContext = require.context("@/pages/", true, /meta.json$/);
+    case "modules":
+      requireContext = require.context("@/modules/", true, /meta.json$/);
       break;
   }
 
@@ -99,8 +99,8 @@ export function getExtensions({ commit }, type) {
     case "layouts":
       request = api.getLayouts();
       break;
-    case "pages":
-      request = api.getPages();
+    case "modules":
+      request = api.getModules();
       break;
     default:
   }
@@ -159,6 +159,6 @@ export function getAllExtensions({ dispatch }) {
   return Promise.all([
     dispatch("getExtensions", "interfaces"),
     dispatch("getExtensions", "layouts"),
-    dispatch("getExtensions", "pages")
+    dispatch("getExtensions", "modules")
   ]);
 }

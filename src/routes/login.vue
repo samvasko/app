@@ -11,7 +11,7 @@
       <!-- the getProjects action will set the currentProject on load. When currentProject doesn't exist
         it means that the store doesn't have any projects that can be used loaded-->
       <template v-else-if="!currentProject">
-        {{ $t("no_public_projects") }}
+        <v-notice icon="info" color="warning">{{ $t("no_public_projects") }}</v-notice>
       </template>
 
       <template v-else-if="currentProject.status === 'failed'">

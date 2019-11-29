@@ -591,9 +591,7 @@ export default {
     }
   },
   created() {
-    if (this.isNew) {
-      this.stageDefaultValues();
-    } else {
+    if (this.isNew === false) {
       this.fetchActivity();
       this.checkOtherUsers();
     }
@@ -615,9 +613,6 @@ export default {
     this.formtrap.unbind("mod+s");
   },
   methods: {
-    stageDefaultValues() {
-      _.forEach(this.defaultValues, (value, field) => this.stageValue({ field, value }));
-    },
     stageValue({ field, value }) {
       this.$store.dispatch("stageValue", { field, value });
     },
@@ -651,7 +646,14 @@ export default {
           });
           this.confirmRemoveLoading = false;
           this.confirmRemove = false;
-          this.$router.push(`/${this.currentProjectKey}/collections/${this.collection}`);
+
+          let linkTo = `/${this.currentProjectKey}/collections/${this.collection}`;
+
+          if (this.collection.startsWith("directus_") === true) {
+            linkTo = `/${this.currentProjectKey}/${this.collection.substring(9)}`;
+          }
+
+          this.$router.push(linkTo);
         })
         .catch(error => {
           this.$store.dispatch("loadingFinished", id);

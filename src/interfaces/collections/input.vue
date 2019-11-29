@@ -21,11 +21,14 @@ export default {
 
       let choices = {};
 
-      Object.keys(collections).forEach(key => {
-        if (includeSystem === false && key.startsWith("directus_")) return;
-
-        choices[key] = this.$helpers.formatTitle(key);
-      });
+      Object.keys(collections)
+        .filter(key => {
+          if (includeSystem) return key;
+          return key.startsWith("directus_") === false;
+        })
+        .forEach(key => {
+          choices[key] = this.$helpers.formatTitle(key);
+        });
 
       return choices;
     }

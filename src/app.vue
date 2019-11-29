@@ -25,7 +25,7 @@
     v-else-if="!publicRoute"
     id="app"
     :style="{
-      '--brand': `var(--${color})`
+      '--brand': color.startsWith('#') ? color : `var(--${color})`
     }"
   >
     <div v-if="hydrated" class="directus">
@@ -92,7 +92,7 @@ export default {
       if (
         Object.values(extensions.interfaces).length === 0 &&
         Object.values(extensions.layouts).length === 0 &&
-        Object.values(extensions.pages).length === 0
+        Object.values(extensions.modules).length === 0
       ) {
         return true;
       }

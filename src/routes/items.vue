@@ -77,7 +77,7 @@
       :view-options="viewOptions"
       :selection="!activity ? selection : null"
       links
-      @fetch="meta = $event"
+      @fetch="setMeta"
       @options="setViewOptions"
       @select="selection = $event"
       @query="setViewQuery"
@@ -357,17 +357,20 @@ export default {
         !_.isEmpty(this.preferences.filters) ||
         (!_.isNil(this.preferences.search_query) && this.preferences.search_query.length > 0);
 
-      /* total_count returns the total number of data in collection.So for mine and
-         role only permissions it also returns the same.So to fix it removed
-         total_count from item_count and added result_count.
-         Issue Fix 2122
-      */
+      // We're showing the collection total count, until we hit the last page of infinite scrolling.
+      // At that point, we'll rely on the local count that's being set by the items.vue child component
+      let count = this.meta.total_count;
+
+      if (this.meta.result_count < this.$store.state.settings.values.default_limit) {
+        count = this.meta.local_count;
+      }
+
       return isFiltering
-        ? this.$tc("item_count_filter", this.meta.result_count, {
-            count: this.$n(this.meta.result_count)
+        ? this.$tc("item_count_filter", count, {
+            count: this.$n(count)
           })
-        : this.$tc("item_count", this.meta.result_count, {
-            count: this.$n(this.meta.result_count)
+        : this.$tc("item_count", count, {
+            count: this.$n(count)
           });
     },
     filterableFieldNames() {
@@ -527,6 +530,9 @@ export default {
   },
   methods: {
     keyBy: _.keyBy,
+    setMeta(meta) {
+      this.meta = meta;
+    },
     editCollection() {
       if (!this.$store.state.currentUser.admin) return;
       this.$router.push(`/${this.currentProjectKey}/settings/collections/${this.collection}`);
@@ -663,8 +669,6 @@ export default {
       return next(vm => (vm.notFound = true));
     }
 
-    if (collection === "directus_files") return next("/files");
-
     if (collectionInfo && collectionInfo.single) {
       return next(`/${store.state.currentProjectKey}/collections/${collection}/1`);
     }
@@ -704,7 +708,7 @@ export default {
     }
 
     if (collectionInfo && collectionInfo.single) {
-      return next(`/${store.state.currentProjectKey}/collections/${collection}/1`);
+      return next(`/${this.$store.state.currentProjectKey}/collections/${collection}/1`);
     }
 
     const id = this.$helpers.shortid.generate();

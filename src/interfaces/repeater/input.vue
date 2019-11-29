@@ -1,6 +1,5 @@
 <template>
   <div class="interface-repeater">
-    <v-notice v-if="rows.length === 0" class="notice">{{ $tc("item_count", 0) }}</v-notice>
     <draggable
       v-model="rows"
       handle=".drag-handle"
@@ -16,11 +15,17 @@
         :fields="repeaterFields"
         :inline="inline"
         :template="options.template"
+        :open="open === index"
+        :placeholder="options.placeholder"
+        @open="toggleOpen(index)"
         @input="updateRow(index, $event)"
         @remove="removeRow(index)"
       />
     </draggable>
-    <v-button v-if="addButtonVisible" @click="addRow">{{ $t("add_new") }}</v-button>
+    <div v-if="addButtonVisible" class="add-new" @click="addRow">
+      <v-icon name="add" color="input-icon-color" />
+      {{ options.createItemText }}
+    </div>
   </div>
 </template>
 
@@ -38,7 +43,8 @@ export default {
   data() {
     return {
       rows: [],
-      dragging: false
+      dragging: false,
+      open: null
     };
   },
   computed: {
@@ -91,6 +97,7 @@ export default {
   methods: {
     addRow() {
       this.rows = [...this.rows, this.getNewRow()];
+      this.open = this.rows.length - 1;
       this.emitValue();
     },
     updateRow(index, { field, value }) {
@@ -153,16 +160,41 @@ export default {
     endDrag() {
       this.dragging = false;
       this.emitValue();
+    },
+    toggleOpen(index) {
+      if (this.open === index) {
+        this.open = null;
+      } else {
+        this.open = index;
+      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.row-container {
-  margin-bottom: 12px;
-}
 .notice {
   margin-bottom: 12px;
+}
+
+.add-new {
+  display: flex;
+  align-items: center;
+  padding: var(--input-padding);
+  border: var(--input-border-width) dotted var(--input-border-color);
+  border-radius: var(--border-radius);
+  color: var(--input-text-color);
+  transition: var(--fast) var(--transition);
+  transition-property: color, border-color, padding;
+  min-height: var(--input-height);
+  font-size: var(--input-font-size);
+  padding: var(--input-padding);
+  cursor: pointer;
+  &:hover {
+    border-color: var(--input-border-color-hover);
+  }
+  i {
+    margin-right: 8px;
+  }
 }
 </style>

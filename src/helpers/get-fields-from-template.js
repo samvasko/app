@@ -8,7 +8,7 @@
  * // -> ["title", "runtime"]
  */
 export default function getFieldsFromTemplate(string) {
-  const regex = /{{(.*)}}/g;
+  const regex = /{{(.*?)}}/g;
   let fields = string.match(regex);
   fields = fields.map(field => {
     return field

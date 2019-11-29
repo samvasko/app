@@ -77,7 +77,7 @@ export default {
       default: false
     },
     options: {
-      type: Object,
+      type: [Object, Array],
       default: () => ({})
     },
     newItem: {
@@ -125,6 +125,9 @@ export default {
     },
     optionsWithDefaults() {
       if (!this.interface) return {};
+
+      // The API sometimes defaults to an empty array instead of a value
+      if (Array.isArray(this.options)) return {};
 
       const defaults = _.mapValues(this.interface.options, settings => settings.default || null);
 
