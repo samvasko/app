@@ -1,3 +1,9 @@
+if (!process.env.API_URL) {
+  console.log(`
+⚠️   No API URL passed. Using the demo API as a fallback.
+`);
+}
+
 module.exports = {
   lintOnSave: false,
   publicPath: process.env.NODE_ENV === "production" ? "" : "/admin/",
@@ -7,7 +13,7 @@ module.exports = {
     public: "127.0.0.1:8080",
     proxy: {
       "/": {
-        target: process.env.API_URL ? process.env.API_URL : "http://demo.directus.io/",
+        target: process.env.API_URL ? process.env.API_URL : "https://demo.directus.io/",
         changeOrigin: true
       }
     }
