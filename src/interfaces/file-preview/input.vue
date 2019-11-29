@@ -263,6 +263,8 @@ export default {
 
         this.image.hash = shortid.generate();
         this.editMode = null;
+        this.image.cropRatio = "free";
+        this.image.cropper.destroy();
       } catch (err) {
         this.$events.emit("error", {
           notify: "There was an error while saving the image",
